@@ -17,6 +17,8 @@ function App() {
     { id: 3, title: "React", isDone: false },
   ];
 
+  //TaskType[] и Array<TaskType>: могут использоваться обе формы, но лучше Array<TaskType>
+
   const task_2: TaskType[] = [
     { id: 4, title: "Meat", isDone: true },
     { id: 5, title: "Bear", isDone: true },
@@ -25,11 +27,10 @@ function App() {
 
   return (
     <div className="App">
-      <Todolist title={todolistTitle1} tasks={task_1} />
+      <Todolist title={todolistTitle1} tasks={task_1} date="02.12.2024" />
       <Todolist title={todolistTitle2} tasks={task_2} />
     </div>
   );
 }
 
 export default App;
- 

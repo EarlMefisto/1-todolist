@@ -1,5 +1,4 @@
 import { TaskType } from "../../App";
-import { Button } from "../../components/Buttons/Button";
 import { FilterButtons } from "../../components/Buttons/FilterButtons";
 import { Form } from "../../components/Form";
 import { Header } from "../header/Header";
@@ -7,9 +6,10 @@ import { Header } from "../header/Header";
 type TodolistPropsType = {
   title: string;
   tasks: Array<TaskType>;
+  date?: string;
 };
 
-export function Todolist({ title, tasks }: TodolistPropsType) {
+export function Todolist({ title, tasks, date }: TodolistPropsType) {
   //условный рендеринг
   const tasksList =
     tasks.length === 0 ? (
@@ -33,6 +33,7 @@ export function Todolist({ title, tasks }: TodolistPropsType) {
       <Form />
       <ul>{tasksList}</ul>
       <FilterButtons />
+      <div>{date}</div>
     </div>
   );
 }
