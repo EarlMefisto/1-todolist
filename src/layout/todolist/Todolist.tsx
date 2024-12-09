@@ -1,4 +1,5 @@
-import { TaskType } from "../../App";
+import { FilterValuesType, TaskType } from "../../App";
+import { Button } from "../../components/Buttons/Button";
 import { FilterButtons } from "../../components/Buttons/FilterButtons";
 import { Form } from "../../components/Form";
 import { Header } from "../header/Header";
@@ -7,33 +8,35 @@ type TodolistPropsType = {
   title: string;
   tasks: Array<TaskType>;
   date?: string;
+  removeTask: (taskId: number) => void;
+  changeTodolistFilter: (nextFilter: FilterValuesType) => void;
 };
 
-export function Todolist({ title, tasks, date }: TodolistPropsType) {
+export function Todolist(props: TodolistPropsType) {
   //условный рендеринг
   const tasksList =
-    tasks.length === 0 ? (
-      <span>Your todolist is empty</span>
-    ) : (
-      <ul>
-        {tasks.map((t) => {
+    props.tasks.length === 0 
+    ? <span>Your todolist is empty</span>
+    : <ul>
+        {props.tasks.map((t) => {
           return (
             <li>
               <input type="checkbox" checked={t.isDone} />
               <span>{t.title}</span>
+              <Button title="x" onClickHandler={() => props.removeTask(t.id)} />
             </li>
           );
         })}
       </ul>
-    );
+    ;
 
   return (
     <div className="todolist">
-      <Header title={title} />
+      <Header title={props.title} />
       <Form />
       <ul>{tasksList}</ul>
-      <FilterButtons />
-      <div>{date}</div>
+      <FilterButtons changeTodolistFilter={props.changeTodolistFilter} />
+      <div>{props.date}</div>
     </div>
   );
 }

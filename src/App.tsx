@@ -1,5 +1,10 @@
+import React, { useState } from "react";
 import "./App.css";
 import { Todolist } from "./layout/todolist/Todolist";
+
+//CRUD
+// - повторяемость, дублирование - 100%
+// - создание понятной структуры - holy war
 
 export type TaskType = {
   id: number;
@@ -7,28 +12,49 @@ export type TaskType = {
   isDone: boolean;
 };
 
+export type FilterValuesType = "all" | "active" | "completed";
+
 function App() {
   const todolistTitle1 = "What to learn";
-  const todolistTitle2 = "What to buy";
-
-  const task_1: Array<TaskType> = [
+  const [tasks, setNextTasks] = React.useState<Array<TaskType>>([
     { id: 1, title: "HTML&CSS", isDone: true },
     { id: 2, title: "JS", isDone: true },
     { id: 3, title: "React", isDone: false },
-  ];
+  ]);
 
   //TaskType[] и Array<TaskType>: могут использоваться обе формы, но лучше Array<TaskType>
 
-  const task_2: TaskType[] = [
-    { id: 4, title: "Meat", isDone: true },
-    { id: 5, title: "Bear", isDone: true },
-    { id: 6, title: "Water", isDone: false },
-  ];
+  const removeTask = (taskId: number) => {
+    //2
+    const nextState: Array<TaskType> = tasks.filter((t) => t.id !== taskId);
+    setNextTasks(nextState);
+    // console.log(tasks);
+  };
+
+  //UI
+  const [filter, setNextFilter] = React.useState<FilterValuesType>("all");
+
+  const changeTodolistFilter = (nextFilter: FilterValuesType) => {
+    setNextFilter(nextFilter);
+  };
+
+  let filtredTasks: Array<TaskType> = tasks;
+  if (filter === "active") {
+    filtredTasks = tasks.filter((t) => !t.isDone);
+  }
+  if (filter === "completed") {
+    filtredTasks = tasks.filter((t) => t.isDone);
+  }
 
   return (
     <div className="App">
-      <Todolist title={todolistTitle1} tasks={task_1} date="02.12.2024" />
-      <Todolist title={todolistTitle2} tasks={task_2} />
+      <Todolist
+        title={todolistTitle1}
+        tasks={filtredTasks}
+        date="02.12.2024"
+        removeTask={removeTask}
+        changeTodolistFilter={changeTodolistFilter}
+      />
     </div>
   );
 }
