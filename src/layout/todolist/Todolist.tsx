@@ -15,21 +15,19 @@ type TodolistPropsType = {
 export function Todolist(props: TodolistPropsType) {
   //условный рендеринг
   const tasksList =
-    props.tasks.length === 0 
-    ? <span>Your todolist is empty</span>
-    : <ul>
-        {props.tasks.map((t) => {
-          return (
-            <li>
-              <input type="checkbox" checked={t.isDone} />
-              <span>{t.title}</span>
-              <Button title="x" onClickHandler={() => props.removeTask(t.id)} />
-            </li>
-          );
-        })}
+    props.tasks.length === 0 ? (
+      <span>Your todolist is empty</span>
+    ) : (
+      <ul>
+        {props.tasks.map((t) => (
+          <li>
+            <input type="checkbox" checked={t.isDone} />
+            <span>{t.title}</span>
+            <Button title="x" onClickHandler={() => props.removeTask(t.id)} />
+          </li>
+        ))}
       </ul>
-    ;
-
+    );
   return (
     <div className="todolist">
       <Header title={props.title} />

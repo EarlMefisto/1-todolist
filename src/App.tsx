@@ -16,7 +16,7 @@ export type FilterValuesType = "all" | "active" | "completed";
 
 function App() {
   const todolistTitle1 = "What to learn";
-  const [tasks, setNextTasks] = React.useState<Array<TaskType>>([
+  let [tasks, setNextTasks] = React.useState<Array<TaskType>>([ 
     { id: 1, title: "HTML&CSS", isDone: true },
     { id: 2, title: "JS", isDone: true },
     { id: 3, title: "React", isDone: false },
@@ -25,7 +25,6 @@ function App() {
   //TaskType[] и Array<TaskType>: могут использоваться обе формы, но лучше Array<TaskType>
 
   const removeTask = (taskId: number) => {
-    //2
     const nextState: Array<TaskType> = tasks.filter((t) => t.id !== taskId);
     setNextTasks(nextState);
     // console.log(tasks);
