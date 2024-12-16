@@ -1,18 +1,22 @@
+import { ChangeEvent, useRef, useState } from "react";
 import { FilterValuesType, TaskType } from "../../App";
 import { Button } from "../../components/Buttons/Button";
 import { FilterButtons } from "../../components/Buttons/FilterButtons";
-import { Form } from "../../components/Form";
-import { Header } from "../header/Header";
+import { HeaderTodolist } from "../header/HeaderTodolist";
 
 type TodolistPropsType = {
   title: string;
-  tasks: Array<TaskType>;
+  tasks: TaskType[];
   date?: string;
-  removeTask: (taskId: number) => void;
+  removeTask: (taskId: string) => void;
   changeTodolistFilter: (nextFilter: FilterValuesType) => void;
+  addTask: (title: string) => void;
 };
 
 export function Todolist(props: TodolistPropsType) {
+  // const TaskInputRef = useRef<HTMLInputElement>(null);
+
+  const [taskTitle, setTaskTitle] = useState("");
   //условный рендеринг
   const tasksList =
     props.tasks.length === 0 ? (
@@ -28,11 +32,44 @@ export function Todolist(props: TodolistPropsType) {
         ))}
       </ul>
     );
+
+  const isAddTaskPossible = taskTitle.length <= 10;
+
+  const addTaskHandler = () => {
+    props.addTask(taskTitle);
+    setTaskTitle("");
+  };
+  
+
   return (
     <div className="todolist">
-      <Header title={props.title} />
-      <Form />
-      <ul>{tasksList}</ul>
+      <HeaderTodolist title={props.title} />
+      <div>
+        {/* <input ref={TaskInputRef} /> */}
+        <input
+          value={taskTitle}
+          onChange={(e) => setTaskTitle(e.currentTarget.value)}
+          onKeyDown={event => {
+            if (event.key === "Enter") {
+              addTaskHandler()
+            }
+          }}
+        />
+        <Button
+          title="+"
+          onClickHandler={addTaskHandler}
+          isButtonDisabled={!taskTitle.length && !isAddTaskPossible}
+          // onClickHandler={() => {
+          //   if (TaskInputRef.current) {
+          //     props.addTask(TaskInputRef.current.value)
+          //     TaskInputRef.current.value = ""
+          //   }
+          // }}
+        />
+      </div>
+      {!taskTitle.length && <div>Enter title name (max lenght 10 symbols)</div>}
+      {!isAddTaskPossible && <div>Task name is long</div>}
+      {tasksList}
       <FilterButtons changeTodolistFilter={props.changeTodolistFilter} />
       <div>{props.date}</div>
     </div>
