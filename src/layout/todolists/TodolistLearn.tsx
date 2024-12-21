@@ -1,19 +1,19 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useState } from "react";
 import { FilterValuesType, TaskType } from "../../App";
 import { Button } from "../../components/Buttons/Button";
 import { FilterButtons } from "../../components/Buttons/FilterButtons";
 import { HeaderTodolist } from "../header/HeaderTodolist";
 
-type TodolistPropsType = {
+export type TodolistPropsType = {
   title: string;
   tasks: TaskType[];
-  date?: string;
+  date: string;
   removeTask: (taskId: string) => void;
   changeTodolistFilter: (nextFilter: FilterValuesType) => void;
   addTask: (title: string) => void;
 };
 
-export function Todolist(props: TodolistPropsType) {
+export function TodolistLearn(props: TodolistPropsType) {
   // const TaskInputRef = useRef<HTMLInputElement>(null);
 
   const [taskTitle, setTaskTitle] = useState("");
@@ -27,7 +27,7 @@ export function Todolist(props: TodolistPropsType) {
           <li>
             <input type="checkbox" checked={t.isDone} />
             <span>{t.title}</span>
-            <Button title="x" onClickHandler={() => props.removeTask(t.id)} />
+            <Button title="X" onClickHandler={() => props.removeTask(t.id)} />
           </li>
         ))}
       </ul>
@@ -39,7 +39,17 @@ export function Todolist(props: TodolistPropsType) {
     props.addTask(taskTitle);
     setTaskTitle("");
   };
-  
+
+  const onNewTitileChangeHandler = (event: ChangeEvent<HTMLInputElement>) =>
+    setTaskTitle(event.currentTarget.value);
+
+  const onNewTitileKeyDownHandler = (
+    event: KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (event.key === "Enter") {
+      addTaskHandler();
+    }
+  };
 
   return (
     <div className="todolist">
@@ -48,12 +58,8 @@ export function Todolist(props: TodolistPropsType) {
         {/* <input ref={TaskInputRef} /> */}
         <input
           value={taskTitle}
-          onChange={(e) => setTaskTitle(e.currentTarget.value)}
-          onKeyDown={event => {
-            if (event.key === "Enter") {
-              addTaskHandler()
-            }
-          }}
+          onChange={onNewTitileChangeHandler}
+          onKeyDown={onNewTitileKeyDownHandler}
         />
         <Button
           title="+"

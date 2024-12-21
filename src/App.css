@@ -1,6 +1,7 @@
 .App {
   padding: 30px;
   display: flex;
+  background-color: #808080;
 }
 
 .App > div {
@@ -8,7 +9,7 @@
 }
 
 .todolist {
-  background-color: #808080;
+  background-color: #ffc0cb;
   border: 2px solid #f097c9;
   border-radius: 5px;
   padding: 15px;
