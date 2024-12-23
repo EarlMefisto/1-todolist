@@ -1,6 +1,6 @@
 type HeaderPropsType = {
-    title: string
-}
+  title: string;
+};
 
 export const HeaderTodolist = ({ title }: HeaderPropsType) => {
   return <h3>{title}</h3>;

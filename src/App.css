@@ -14,3 +14,23 @@
   border-radius: 5px;
   padding: 15px;
 }
+
+.error {
+  border: 2px solid red;
+  border-radius: 5px;
+}
+
+.error-message {
+  color: red;
+}
+
+.active-filter-button {
+  background-color: #808080;
+  color: #ffc0cb;
+  border: 1px solid;
+}
+
+.is-done {
+  font-weight: lighter;
+  opacity: 0.5;
+}
