@@ -15,13 +15,11 @@ export type TodolistPropsType = {
   changeTodolistFilter: (nextFilter: FilterValuesType) => void;
 };
 
-export function TodolistLearn(props: TodolistPropsType) {
-  // const TaskInputRef = useRef<HTMLInputElement>(null);
+export const TodolistLearn = (props: TodolistPropsType) => {
 
   const [taskTitle, setTaskTitle] = useState("");
   const [error, setError] = useState<boolean>(false);
 
-  //условный рендеринг
   const tasksList =
     props.tasks.length === 0 ? (
       <span>Your todolist is empty</span>

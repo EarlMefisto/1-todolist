@@ -1,26 +1,26 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
-import { FilterValuesType, TaskType } from "../../App";
+import { FilterValuesType, TaskType2 } from "../../App";
 import { Button } from "../../components/Buttons/Button";
 import { FilterButtons } from "../../components/Buttons/FilterButtons";
 import { HeaderTodolist } from "../header/HeaderTodolist";
-import { eventNames } from "process";
 
 type TodolistReadProsType = {
   title: string;
   date: string;
-  tasks: TaskType[];
-  filter: FilterValuesType;
+  tasks: TaskType2[];
+  filter2: FilterValuesType;
   addTask: (title: string) => void;
   removeTask: (taskId: string) => void;
   changeTaskStatus: (taskId: string, newStatus: boolean) => void;
-  changeTodolistFilter: (nextFilter: FilterValuesType) => void;
+  changeTodolistFilter2: (nextFilter2: FilterValuesType) => void;
 };
 
 export const TodolistRead = (props: TodolistReadProsType) => {
+
   const [taskTitle, setTaskTitle] = useState("");
   const [error, setError] = useState<boolean>(false);
 
-  let tasksList2 =
+  const tasksList2 =
     props.tasks.length === 0 ? (
       <span>Your todolist is empty</span>
     ) : (
@@ -90,8 +90,8 @@ export const TodolistRead = (props: TodolistReadProsType) => {
       {error && <div className="error-message">Task title is required</div>}
       {tasksList2}
       <FilterButtons
-        filter={props.filter}
-        changeTodolistFilter={props.changeTodolistFilter}
+        filter2={props.filter2}
+        changeTodolistFilter={props.changeTodolistFilter2}
       />
       <div>{props.date}</div>
     </div>

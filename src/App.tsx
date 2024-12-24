@@ -14,17 +14,16 @@ export type TaskType = {
   isDone: boolean;
 };
 
+export type TaskType2 = {
+  id: string;
+  title: string;
+  isDone: boolean;
+};
+
 export type FilterValuesType = "all" | "active" | "completed";
 
 function App() {
   //TaskType[] и Array<TaskType>: могут использоваться обе формы, но лучше Array<TaskType>
-
-  //UI
-  const [filter, setNextFilter] = useState<FilterValuesType>("all");
-
-  const changeTodolistFilter = (nextFilter: FilterValuesType) => {
-    setNextFilter(nextFilter);
-  };
 
   // "What to learn?"
   const todolistTitle1 = "What to learn?";
@@ -34,6 +33,12 @@ function App() {
     { id: v1(), title: "JS", isDone: true },
     { id: v1(), title: "React", isDone: false },
   ]);
+
+  const [filter, setNextFilter] = useState<FilterValuesType>("all");
+
+  const changeTodolistFilter = (nextFilter: FilterValuesType) => {
+    setNextFilter(nextFilter);
+  };
 
   let filtredTasks: Array<TaskType> = tasks;
   if (filter === "active") {
@@ -68,7 +73,7 @@ function App() {
   // "What to read?"
   const todolistTitle2 = "What to read?";
 
-  const [tasks2, setNextTasks2] = useState<Array<TaskType>>([
+  const [tasks2, setNextTasks2] = useState<Array<TaskType2>>([
     { id: v1(), title: "Mushishi", isDone: true },
     { id: v1(), title: "Hellsing", isDone: true },
     { id: v1(), title: "Jujutsu Kaisen 0", isDone: true },
@@ -79,27 +84,40 @@ function App() {
     { id: v1(), title: "Spy x Family", isDone: false },
   ]);
 
-  let filtredTasks2: Array<TaskType> = tasks2;
-  if (filter === "active") {
+  const [filter2, setNextFilter2] = useState<FilterValuesType>("all");
+
+  const changeTodolistFilter2 = (nextFilter2: FilterValuesType) => {
+    setNextFilter2(nextFilter2);
+  };
+
+  let filtredTasks2: Array<TaskType2> = tasks2;
+  if (filter2 === "active") {
     filtredTasks2 = tasks2.filter((t) => !t.isDone);
   }
-  if (filter === "completed") {
+  if (filter2 === "completed") {
     filtredTasks2 = tasks2.filter((t) => t.isDone);
   }
 
   const addtask2 = (title: string) => {
-    const newTask: TaskType = {
+    const newTask: TaskType2 = {
       id: v1(),
       title,
       isDone: false,
     };
-    const nextState: TaskType[] = [newTask, ...tasks2];
+    const nextState: TaskType2[] = [newTask, ...tasks2];
     setNextTasks2(nextState);
   };
 
+  const changeTaskStatus2 = (taskId: string, newStatus: boolean) => {
+    const nextStatus: Array<TaskType2> = tasks2.map((t) =>
+      t.id === taskId ? { ...t, isDone: newStatus } : t
+    );
+    setNextTasks2(nextStatus);
+  };
+
   const removeTask2 = (taskId: string) => {
-    const nextState: Array<TaskType> = tasks.filter((t) => t.id !== taskId);
-    setNextTasks(nextState);
+    const nextState: Array<TaskType2> = tasks2.filter((t) => t.id !== taskId);
+    setNextTasks2(nextState);
   };
 
   return (
@@ -117,12 +135,12 @@ function App() {
       <TodolistRead
         title={todolistTitle2}
         tasks={filtredTasks2}
-        filter={filter}
+        filter2={filter2}
         date="21.12.2024"
         addTask={addtask2}
         removeTask={removeTask2}
-        changeTaskStatus={changeTaskStatus}
-        changeTodolistFilter={changeTodolistFilter}
+        changeTaskStatus={changeTaskStatus2}
+        changeTodolistFilter2={changeTodolistFilter2}
       />
     </div>
   );
