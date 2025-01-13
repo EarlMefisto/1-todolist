@@ -1,8 +1,9 @@
-import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { FilterValuesType, TaskType } from "../../App";
 import { Button } from "../../components/Buttons/Button";
 import { FilterButtons } from "../../components/Buttons/FilterButtons";
 import { HeaderTodolist } from "../header/HeaderTodolist";
+import { AddItemForm } from "../../components/AddItemForm";
 
 export type TodolistPropsType = {
   title: string;
@@ -16,7 +17,6 @@ export type TodolistPropsType = {
 };
 
 export const TodolistLearn = (props: TodolistPropsType) => {
-
   const [taskTitle, setTaskTitle] = useState("");
   const [error, setError] = useState<boolean>(false);
 
@@ -46,50 +46,10 @@ export const TodolistLearn = (props: TodolistPropsType) => {
 
   const isAddTaskPossible = taskTitle.length <= 10;
 
-  const addTaskHandler = () => {
-    const trimmedTitie = taskTitle.trim();
-    if (trimmedTitie) {
-      props.addTask(taskTitle);
-    } else {
-      setError(true);
-    }
-    setTaskTitle("");
-  };
-
-  const setLocalTitileHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    error && setError(false);
-    setTaskTitle(event.currentTarget.value);
-  };
-
-  const onNewTitileKeyDownHandler = (
-    event: KeyboardEvent<HTMLInputElement>
-  ) => {
-    if (taskTitle.length && isAddTaskPossible && event.key === "Enter") {
-      addTaskHandler();
-    }
-  };
-
   return (
     <div className="todolist">
       <HeaderTodolist title={props.title} />
-      <div>
-        <input
-          value={taskTitle}
-          onChange={setLocalTitileHandler}
-          onKeyDown={onNewTitileKeyDownHandler}
-          className={error ? "error" : ""}
-        />
-        <Button
-          title="+"
-          onClickHandler={addTaskHandler}
-          isButtonDisabled={!taskTitle.length || !isAddTaskPossible}
-        />
-      </div>
-      {!isAddTaskPossible && (
-        <div className="error-message">Task name is long</div>
-      )}
-      {!taskTitle.length && <div>Enter title name (max 10 symbols)</div>}
-      {error && <div className="error-message">Task title is required</div>}
+      <AddItemForm addItem={props.addTask} />
       {tasksList}
       <FilterButtons
         filter={props.filter}
@@ -98,4 +58,4 @@ export const TodolistLearn = (props: TodolistPropsType) => {
       <div>{props.date}</div>
     </div>
   );
-}
+};

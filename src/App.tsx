@@ -3,6 +3,7 @@ import { useState } from "react";
 import { v1 } from "uuid";
 import { TodolistLearn } from "./layout/todolists/TodolistLearn";
 import { TodolistRead } from "./layout/todolists/TodolistRead";
+import { AddItemForm } from "./components/AddItemForm";
 
 //CRUD
 // - повторяемость, дублирование - 100%
@@ -120,8 +121,13 @@ function App() {
     setNextTasks2(nextState);
   };
 
+  const addTodoList = (title: string) => {
+    
+  }
+
   return (
     <div className="App">
+      <AddItemForm addItem={addTodoList} />
       <TodolistLearn
         title={todolistTitle1}
         tasks={filtredTasks}
